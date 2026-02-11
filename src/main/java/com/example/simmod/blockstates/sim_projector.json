@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "simmod:block/sim_projector" },
+    "facing=south": { "model": "simmod:block/sim_projector", "y": 180 },
+    "facing=east": { "model": "simmod:block/sim_projector", "y": 90 },
+    "facing=west": { "model": "simmod:block/sim_projector", "y": 270 }
+  }
+}
