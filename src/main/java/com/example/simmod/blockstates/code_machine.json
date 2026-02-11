@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "simmod:block/code_machine" },
+    "facing=south": { "model": "simmod:block/code_machine", "y": 180 },
+    "facing=east": { "model": "simmod:block/code_machine", "y": 90 },
+    "facing=west": { "model": "simmod:block/code_machine", "y": 270 }
+  }
+}
