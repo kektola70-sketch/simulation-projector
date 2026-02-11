@@ -1,5 +1,5 @@
 {
   "variants": {
-    "": { "model": "simmod:block/sim_glass" }
+    "": { "model": "simmod:block/sim_wire" }
   }
 }
