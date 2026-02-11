@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "simmod:block/code_machine_side",
+    "down": "simmod:block/code_machine_bottom",
+    "up": "simmod:block/code_machine_top",
+    "north": "simmod:block/code_machine_front",
+    "east": "simmod:block/code_machine_side",
+    "south": "simmod:block/code_machine_side",
+    "west": "simmod:block/code_machine_side"
+  }
+}
