@@ -1,0 +1,60 @@
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', transitive: true
+    }
+}
+
+apply plugin: 'net.minecraftforge.gradle'
+
+group = 'gamersencqtolik' // Твой ник или домен
+version = '1.0.0'
+archivesBaseName = 'simmod' // Название файла мода на выходе
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(8) // Для 1.16.5 нужна Java 8 или 11
+
+minecraft {
+    // Версия маппингов (названия функций в коде)
+    mappings channel: 'official', version: '1.16.5'
+    
+    runs {
+        client {
+            workingDirectory project.file('run')
+            property 'forge.logging.markers', 'REGISTRIES'
+            property 'forge.logging.console.level', 'debug'
+            mods {
+                simmod {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Версия Forge для 1.16.5
+    minecraft 'net.minecraftforge:forge:1.16.5-36.2.34'
+}
+
+jar {
+    manifest {
+        attributes([
+            "Specification-Title": "Simulation Mod",
+            "Specification-Vendor": "YourName",
+            "Specification-Version": "1",
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" : "YourName",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
+    }
+}
+
+jar.finalizedBy('reobfJar')
