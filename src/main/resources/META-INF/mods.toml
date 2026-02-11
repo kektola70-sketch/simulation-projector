@@ -1,0 +1,10 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="MIT"
+
+[[mods]]
+modId="simmod"
+version="1.0.0"
+displayName="Simulation Mod"
+authors="YourName"
+description="Mod for simulation projector and wires."
