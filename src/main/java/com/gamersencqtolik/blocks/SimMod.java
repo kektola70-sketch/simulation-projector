@@ -9,10 +9,8 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 public class SimMod {
     public SimMod() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        
         ModBlocks.BLOCKS.register(bus);
         ModItems.ITEMS.register(bus);
-
         MinecraftForge.EVENT_BUS.register(this);
     }
 }
