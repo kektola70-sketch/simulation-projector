@@ -1,6 +1,11 @@
 name: Build and Release Mod
 on:
   push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:
+  push:
     tags:
       - 'v*' # Сработает, когда ты создашь тег, или просто на каждый пуш:
   workflow_dispatch: # Позволяет запустить сборку вручную кнопкой
