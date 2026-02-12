@@ -1,9 +1,15 @@
-name: Build Minecraft Mod
-on: [push, pull_request]
+name: Build and Release Mod
+on:
+  push:
+    tags:
+      - 'v*' # Сработает, когда ты создашь тег, или просто на каждый пуш:
+  workflow_dispatch: # Позволяет запустить сборку вручную кнопкой
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # Это нужно, чтобы GitHub мог создать релиз
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -17,15 +23,17 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: 7.6 # Мы явно говорим использовать эту версию
+          gradle-version: 7.6
 
       - name: Build with Gradle
         run: |
-          # Этот скрипт найдет build.gradle, где бы он ни прятался, и запустит сборку
           find . -name "build.gradle" -execdir gradle build \;
 
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
         with:
-          name: SimMod-Jar
-          path: "**/build/libs/*.jar"
+          tag_name: "latest"
+          name: "Latest Build"
+          files: "**/build/libs/*.jar"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
