@@ -1,4 +1,4 @@
-package com.gamersencqtolik.blocks;
+ package com.gamersencqtolik.blocks;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.AbstractBlock;
@@ -26,6 +26,7 @@ public class ProjectorBlock extends Block {
             visited.add(neighbor);
 
             Block block = world.getBlockState(neighbor).getBlock();
+            // Используем прямой доступ к блокам
             if (block == ModBlocks.CODE_MACHINE.get()) return true;
             if (block == ModBlocks.SIM_WIRE.get()) {
                 if (checkConnection(world, neighbor, visited)) return true;
