@@ -14,13 +14,15 @@ jobs:
           java-version: '8'
           distribution: 'temurin'
 
-      - name: Build with Gradle
-        uses: gradle/gradle-build-action@v3
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
         with:
-          arguments: build
-          # Если файл build.gradle лежит сразу в корне, удали строку ниже.
-          # Если он лежит в папке, оставь как есть:
-          build-root-directory: simulation-projector
+          gradle-version: 7.6 # Мы явно говорим использовать эту версию
+
+      - name: Build with Gradle
+        run: |
+          # Этот скрипт найдет build.gradle, где бы он ни прятался, и запустит сборку
+          find . -name "build.gradle" -execdir gradle build \;
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
