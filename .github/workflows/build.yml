@@ -4,17 +4,13 @@ on:
     branches:
       - main
       - master
-  workflow_dispatch:
-  push:
-    tags:
-      - 'v*' # Сработает, когда ты создашь тег, или просто на каждый пуш:
-  workflow_dispatch: # Позволяет запустить сборку вручную кнопкой
+  workflow_dispatch: # Позволяет запустить сборку вручную кнопкой в Actions
 
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Это нужно, чтобы GitHub мог создать релиз
+      contents: write # Разрешение на создание релиза
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -28,17 +24,20 @@ jobs:
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
         with:
-          gradle-version: 7.6
+          gradle-version: 7.6 # Стабильная версия для 1.16.5
 
       - name: Build with Gradle
         run: |
-          find . -name "build.gradle" -execdir gradle build \;
+          # Ищем build.gradle и запускаем сборку там, где он найден
+          find . -name "build.gradle" -execdir gradle build -x test \;
 
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: "latest"
-          name: "Latest Build"
+          name: "Simulation Projector Mod - Готовый файл"
+          body: "Ваш скомпилированный мод для Minecraft 1.16.5. Скачайте .jar файл ниже."
           files: "**/build/libs/*.jar"
+          make_latest: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
