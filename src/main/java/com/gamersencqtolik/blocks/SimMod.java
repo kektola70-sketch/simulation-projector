@@ -1,4 +1,4 @@
- package com.gamersencqtolik.blocks;
+package com.gamersencqtolik.blocks;
 
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
