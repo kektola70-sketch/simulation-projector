@@ -25,7 +25,7 @@ public class SimulationWireBlock extends Block {
 
     @Override
     public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-        if (!world.isClientSide) {
+        if (!world.isClientSide()) {
             boolean hasSignal = world.hasNeighborSignal(pos);
             if (state.getValue(POWERED) != hasSignal) {
                 world.setBlock(pos, state.setValue(POWERED, hasSignal), 3);
