@@ -15,8 +15,7 @@ public class ProjectorBlock extends Block {
     }
 
     public boolean canWork(World world, BlockPos pos) {
-        Set<BlockPos> visited = new HashSet<>();
-        return checkConnection(world, pos, visited);
+        return checkConnection(world, pos, new HashSet<>());
     }
 
     private boolean checkConnection(World world, BlockPos pos, Set<BlockPos> visited) {
