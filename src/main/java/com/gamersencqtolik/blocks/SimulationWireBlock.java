@@ -1,35 +1,35 @@
  package com.gamersencqtolik.blocks;
 
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockState;
 import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.material.Material;
-import net.minecraft.util.Direction;
+import net.minecraft.state.BooleanProperty;
+import net.minecraft.state.StateDefinition;
+import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import java.util.HashSet;
-import java.util.Set;
 
-public class ProjectorBlock extends Block {
-    public ProjectorBlock() {
-        super(AbstractBlock.Properties.of(Material.METAL).strength(3.0f));
+public class SimulationWireBlock extends Block {
+    public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+
+    public SimulationWireBlock() {
+        super(AbstractBlock.Properties.of(Material.DECORATION).strength(0.5f).noOcclusion());
+        this.registerDefaultState(this.stateDefinition.any().setValue(POWERED, false));
     }
 
-    public boolean canWork(World world, BlockPos pos) {
-        return checkConnection(world, pos, new HashSet<>());
+    @Override
+    protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
+        builder.add(POWERED);
     }
 
-    private boolean checkConnection(World world, BlockPos pos, Set<BlockPos> visited) {
-        for (Direction dir : Direction.values()) {
-            BlockPos neighbor = pos.relative(dir);
-            if (visited.contains(neighbor)) continue;
-            visited.add(neighbor);
-
-            Block block = world.getBlockState(neighbor).getBlock();
-            if (block == ModBlocks.CODE_MACHINE.get()) return true;
-            if (block instanceof SimulationWireBlock) {
-                if (checkConnection(world, neighbor, visited)) return true;
+    @Override
+    public void neighborChanged(BlockState state, World world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        if (!world.isClientSide) {
+            boolean hasSignal = world.hasNeighborSignal(pos);
+            if (state.getValue(POWERED) != hasSignal) {
+                world.setBlock(pos, state.setValue(POWERED, hasSignal), 3);
             }
         }
-        return false;
     }
 }
