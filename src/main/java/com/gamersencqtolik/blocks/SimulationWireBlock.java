@@ -2,6 +2,7 @@
 
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.AbstractBlock;
 import net.minecraft.block.material.Material;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.StateDefinition;
@@ -13,7 +14,7 @@ public class SimulationWireBlock extends Block {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
 
     public SimulationWireBlock() {
-        super(Properties.of(Material.DECORATION).strength(0.5f).noOcclusion());
+        super(AbstractBlock.Properties.of(Material.DECORATION).strength(0.5f).noOcclusion());
         this.registerDefaultState(this.stateDefinition.any().setValue(POWERED, false));
     }
 
